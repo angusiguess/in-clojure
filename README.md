@@ -1,13 +1,11 @@
 # in-clojure
 
-A Clojure library designed to ... well, that part is up to you.
+First crack at a computers in music project, a port of terry reilly's In C.
 
 ## Usage
 
-FIXME
+Eval eval eval
 
 ## License
 
-Copyright © 2012 FIXME
-
-Distributed under the Eclipse Public License, the same as Clojure.
+None right now, just messin' around. Do what you'd like with it!
