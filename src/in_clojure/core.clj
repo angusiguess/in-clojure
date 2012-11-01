@@ -29,8 +29,65 @@
 (def part-eight [:G4 :F4 :F4])
 (def part-eight-time [1.5 1 1])
 
-(def part-nine [:B5 :G4 :G4 0 0 0 0])
+(def part-nine [:B5 :G4 0 0 0 0])
 (def part-nine-time [1/16 1/16 1/8 1/4 1/4 1/4])
+
+(def part-ten [:B5 :G4])
+(def part-ten-time [1/16 1/16])
+
+(def part-eleven [:F4 :G4 :B5 :G4 :B5 :G4])
+(def part-eleven-time [1/16 1/16 1/16 1/16 1/16 1/16])
+
+(def part-twelve [:F4 :G4 :B5])
+(def part-twelve-time [1/4 1/4 1])
+
+(def part-thirteen [:B5 :G4 :G4 :F4 :G4 0 :G4 :G4])
+(def part-thirteen-time [1/16 1/4 3/8 1/16 1/16 1/8 3/16 1/16 3/4])
+
+(def part-fourteen [:C5 :B4 :G4 :F#4])
+(def part-fourteen-time [1 1 1 1])
+
+(def part-fifteen [:G4 0 0 0 0])
+(def part-fifteen-time [1/16 3/16 1/4 1/4 1/4])
+
+(def part-sixteen [:G4 :A5 :C5 :B4])
+(def part-sixteen-time [1/16 1/16 1/16 1/16])
+
+(def part-seventeen [:B4 :C5 :B4 :C5 :B4 0])
+(def part-seventeen-time [1/16 1/16 1/16 1/16 1/16 1/16])
+
+(def part-eighteen [:E4 :F#4 :E4 :F4 :E4 :E4])
+(def part-eighteen-time [1/16 1/16 1/16 1/16 3/8 1/16])
+
+(def part-nineteen [0 :G5])
+(def part-nineteen-time [3/8 3/8])
+
+(def part-twenty [:E4 :F#4 :E4 :F4 :A4 :E4 :F4 :E4 :F4 :E4])
+(def part-twenty-time [1/16 1/16 1/16 1/16 3/8 1/16 1/16 1/16 1/16 1/16])
+
+(def part-twentyone [:F#4])
+(def part-twentyone-time [3/4])
+
+(def part-twentytwo [:E4 :E4 :E4 :E4 :E4 :F#4 :G4 :A4 :B4])
+(def part-twentytwo-time [3/8 3/8 3/8 3/8 3/8 3/8 3/8 3/8 1/4])
+
+(def part-twentythree [:E4 :F#4 :F4 :F4 :F4 :F4 :G4 :A4 :B4])
+(def part-twentythree-time [1/8 3/8 3/8 3/8 3/8 3/8 3/8 3/8 1/8])
+
+(def part-twentyfour [:E4 :F#4 :G4 :G4 :G4 :G4 :G4 :G4 :A4 :B4])
+(def part-twentyfour-time [1/8 1/8 3/8 3/8 3/8 3/8 3/8 3/8 1/8])
+
+(def part-twentyfive [:E4 :F#4 :G4 :A4 :A4 :A4 :A4 :A4 :B4])
+(def part-twentyfive-time [1/8 1/8 1/8 3/8 3/8 3/8 3/8 3/8 3/8])
+
+(def part-twentysix [:E4 :F#4 :G4 :A4 :B4 :B4 :B4 :B4 :B4])
+(def part-twentysix-time [1/8 1/8 1/8 1/8 3/8 3/8 3/8 3/8 3/8])
+
+(def part-twentyseven [:E4 :F#4 :E4 :F4 :G4 :E4 :G4 :F4 :E4 :F4 :E4])
+(def part-twentyseven-time [1/16 1/16 1/16 1/16 1/8 1/6 1/16 1/16 1/16 1/16 1/16])
+
+(def part-twentyeight [:E4 :F#4 :E4 :F4 :E4 :E4])
+(def part-twentyeight-time [1/16 1/16 1/16 1/16 1/16 3/16 1/16])
 
 (defn player
   [t speeds notes]
@@ -53,7 +110,8 @@
         next-offset (first (next offsets))]
 
     (at (metro beat) (sampled-piano (note n)))
-    (apply-at (metro (+ beat offset)) #'metro-player [metro (+ beat offset) notes offsets])))
+    (apply-at
+     (metro (+ beat offset)) #'metro-player [metro (+ beat offset) notes offsets])))
 
 (defn play-measure
   [metro notes offsets times]
@@ -61,21 +119,5 @@
                 (take (* times (count notes)) (cycle notes))
                 (take (* times (count offsets)) (cycle offsets))))
 
-;(player (now) (take 4 (cycle part-four-time)) (take 4 (cycle part-four)))
 (stop)
-;(metro-player metro (metro) part-two part-two-time)
-(play-measure metro part-nine part-nine-time 2)
-
-(do
-  ;(play-measure rhythm-time rhythm)
-  ;(play-measure part-one-time part-one)
-  ;(play-measure part-two-time part-two)
-  ;(play-measure part-three-time part-three)
-  ;(play-measure part-four-time part-four)
-  ;(play-measure part-five-time part-five)
-  ;(play-measure part-six-time part-six)
-  )
-
-
-
-;(play-measure part-one-time part-one)
+(play-measure metro part-twentyeight part-twentyeight-time 2)
