@@ -2,8 +2,8 @@
   (:use overtone.live
         overtone.inst.sampled-piano))
 
-(def rhythm [:C5 :C5 :C5 :C5])
-(def rhythm-time [1/4 1/4 1/4 1/4])
+(def rhythm [:C7 :C7 :C7 :C7])
+(def rhythm-time [1/8 1/8 1/8 1/8])
 
 (def part-one [:C4 :E4 :C4 :E4 :C4 :E4])
 (def part-one-time [1/8 1/4 1/8 1/4 1/8 1/4])
@@ -89,6 +89,86 @@
 (def part-twentyeight [:E4 :F#4 :E4 :F4 :E4 :E4])
 (def part-twentyeight-time [1/16 1/16 1/16 1/16 1/16 3/16 1/16])
 
+(def part-twentynine [:E4 :G4 :C5])
+(def part-twentynine-time [3/4 3/4 3/4])
+
+(def part-thirty [:C5])
+(def part-thirty-time [3/2])
+
+(def part-thirtyone [:G4 :F4 :G4 :B4 :G4 :B4])
+(def part-thirtyone-time [1/16 1/16 1/16 1/16 1/16 1/16])
+
+(def part-thirtytwo [:F4 :G4 :F4 :G4 :B4 :F4 :F4 :G4])
+(def part-thirtytwo-time [1/16 1/16 1/16 1/16 1/16 1/16 3/4 3/8])
+
+(def part-thirtythree [:G4 :F4 0])
+(def part-thirtythree-time [1/16 1/16 1/8])
+
+(def part-thirtyfour [:G4 :F4])
+(def part-thirtyfour-time [1/16 1/16])
+
+(def part-thirtyfive [:F4 :G4 :B4 :G4 :B4 :G4 :B4 :G4 :B4 :G4 0 0 0 0
+                      :Bb4 :G5 :G5 :B5 :A5 :G5 :E5 :G5 :F#5 :F5 0 0 0
+                      :E5 :E5 :F5])
+(def part-thirtyfive-time [1/16 1/16 1/16 1/16 1/16 1/16 1/16 1/16 1/16 1/16
+                           1/8 1/4 1/4 1/4 1/4 3/4 1/8 1/8 1/8 1/8 3/8 1/8 3/4
+                           1/8 1/8 1/2 1/4 1/4 1/8 1/8 1/2 3/2])
+
+(def part-thirtysix [:F4 :G4 :B4 :G4 :B4 :G4])
+(def part-thirtysix-time [1/16 1/16 1/16 1/16 1/16 1/16])
+
+(def part-thirtyseven [:F4 :G4])
+(def part-thirtyseven-time [1/16 1/16])
+
+(def part-thirtyeight [:F4 :G4 :B4])
+(def part-thirtyeight-time [1/16 1/16 1/16])
+
+(def part-thirtynine [:B4 :G4 :F4 :G4 :B4 :C5])
+(def part-thirtynine-time [1/16 1/16 1/16 1/16 1/16 1/16])
+
+(def part-forty [:B4 :F4])
+(def part-forty-time [1/16 1/16])
+
+(def part-fortyone [:B4 :G4])
+(def part-fortyone-time [1/16 1/16])
+
+(def part-fortytwo [:C5 :B4 :A4 :C5])
+(def part-fortytwo-time [1 1 1 1])
+
+(def part-fortythree [:F5 :E5 :F5 :E5 :E5 :E5 :E5 :F5 :E5])
+(def part-fortythree-time [1/16 1/16 1/16 1/16 1/8 1/8 1/8 1/16 1/16])
+
+(def part-fortyfour [:F5 :E5 :E5 :E5 :E5 :C5])
+(def part-fortyfour-time [1/8 1/8 1/8 1/8 1/4])
+
+(def part-fortyfive [:D5 :D5 :G4])
+(def part-fortyfive-time [1/4 1/4 1/4])
+
+(def part-fortysix [:G4 :D5 :E5 :D5 0 :G4 0 :G4 0 :G4 :G4 :D5 :E5 :D5])
+(def part-fortysix-time [1/16 1/16 1/16 1/16 1/8 1/8 1/8 1/8 1/8 1/8 1/16
+                         1/16 1/16 1/16])
+
+(def part-fortyseven [:D5 :E5 :D5])
+(def part-fortyseven-time [1/16 1/16 1/8])
+
+(def part-fortyeight [:G4 :G4 :F4 :F4])
+(def part-fortyeight-time [3/2 1 1 1/4])
+
+(def part-fortynine [:F4 :G4 :Bb4 :G4 :B4 :G4])
+(def part-fortynine-time [1/16 1/16 1/16 1/16 1/16 1/16])
+
+(def part-fifty [:F4 :G4])
+(def part-fifty-time [1/16 1/16])
+
+(def part-fiftyone [:F4 :G4 :Bb4])
+(def part-fiftyone-time [1/16 1/16 1/16])
+
+(def part-fiftytwo [:G4 :Bb4])
+(def part-fiftytwo-time [1/16 1/16])
+
+(def part-fiftythree [:Bb4 :G4])
+(def part-fiftythree-time [1/16 1/16])
+
 (defn player
   [t speeds notes]
   (let [n (first notes)
@@ -99,7 +179,7 @@
           (sampled-piano (note n)))
       (apply-at t-next #'player [t-next  (next speeds) notes]))))
 
-(def metro (metronome 48))
+(def metro (metronome 32))
 
 (defn metro-player
   [metro beat notes offsets]
@@ -120,4 +200,4 @@
                 (take (* times (count offsets)) (cycle offsets))))
 
 (stop)
-(play-measure metro part-twentyeight part-twentyeight-time 2)
+(play-measure metro rhythm rhythm-time 1000)
