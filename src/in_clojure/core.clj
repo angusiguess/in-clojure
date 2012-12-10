@@ -2,11 +2,17 @@
   (:use overtone.live
         overtone.inst.sampled-piano))
 
+(definst triangle-wave [freq 2093.0 attack 0.01 sustain 0.1 release 0.4 vol 0.4]
+  (* (env-gen (lin-env attack sustain release) 1 1 0 1 FREE)
+     (lf-tri freq)
+     vol))
+
+
 (def rhythm [:C7 :C7 :C7 :C7])
 (def rhythm-time [1/8 1/8 1/8 1/8])
 
 (def part-one [:C4 :E4 :C4 :E4 :C4 :E4])
-(def part-one-time [1/8 1/4 1/8 1/4 1/8 1/4])
+(def part-one-time [1/16 1/4 1/16 1/4 1/16 1/4])
 
 (def part-two [:C4 :E4 :F4 :E4])
 (def part-two-time [1/8 1/4 1/4 1/4])
@@ -169,6 +175,43 @@
 (def part-fiftythree [:Bb4 :G4])
 (def part-fiftythree-time [1/16 1/16])
 
+(def parts [part-one part-two part-three part-four part-five
+               part-six part-seven part-eight part-nine part-ten
+               part-eleven part-twelve part-thirteen part-fourteen
+               part-fifteen part-sixteen part-seventeen part-eighteen
+               part-nineteen part-twenty part-twentyone part-twentytwo
+               part-twentythree part-twentyfour part-twentyfive
+               part-twentysix part-twentyseven part-twentyeight
+               part-twentynine part-thirty part-thirtyone
+               part-thirtytwo part-thirtythree part-thirtyfour
+               part-thirtyfive part-thirtysix part-thirtyseven
+               part-thirtyeight part-thirtynine part-forty
+               part-fortyone part-fortytwo part-fortythree
+               part-fortyfour part-fortyfive part-fortysix
+               part-fortyseven part-fortyeight part-fortynine
+               part-fifty part-fiftyone part-fiftytwo part-fiftythree])
+
+(def times [part-one-time part-two-time part-three-time part-four-time
+            part-five-time part-six-time part-seven-time part-eight-time
+            part-nine-time part-ten-time part-eleven-time part-twelve-time
+            part-thirteen-time part-fourteen-time part-fifteen-time
+            part-sixteen-time part-seventeen-time part-eighteen-time
+            part-nineteen-time part-twenty-time part-twentyone-time
+            part-twentytwo-time part-twentythree-time part-twentyfour-time
+            part-twentyfive-time part-twentysix-time part-twentyseven-time
+            part-twentyeight-time part-twentynine-time part-thirty-time
+            part-thirtyone-time part-thirtytwo-time part-thirtythree-time
+            part-thirtyfour-time part-thirtyfive-time part-thirtysix-time
+            part-thirtyseven-time part-thirtyeight-time part-thirtynine-time
+            part-forty-time part-fortyone-time part-fortytwo-time
+            part-fortythree-time part-fortyfour-time part-fortyfive-time
+            part-fortysix-time part-fortyseven-time part-fortyeight-time
+            part-fortynine-time part-fifty-time part-fiftyone-time
+            part-fiftytwo-time part-fiftythree-time])
+
+(defn build-piece [max-reps xs]
+  (flatten (map #(take (* (count %1) (rand-int max-reps)) (cycle %1)) xs)))
+
 (defn player
   [t speeds notes]
   (let [n (first notes)
@@ -189,7 +232,7 @@
         offsets (next offsets)
         next-offset (first (next offsets))]
 
-    (at (metro beat) (sampled-piano (note n)))
+    (at (metro beat) (sampled-piano (note n) 0.6))
     (apply-at
      (metro (+ beat offset)) #'metro-player [metro (+ beat offset) notes offsets])))
 
@@ -200,4 +243,19 @@
                 (take (* times (count offsets)) (cycle offsets))))
 
 (stop)
+
 (play-measure metro rhythm rhythm-time 1000)
+
+(do
+  (. Thread (sleep 10000))
+  (play-measure metro (build-piece 10 parts) (build-piece 10 times) 1)
+  (. Thread (sleep 1000))
+  (play-measure metro (build-piece 10 parts) (build-piece 10 times) 1)
+  (. Thread (sleep 1000))
+  (play-measure metro (build-piece 10 parts) (build-piece 10 times) 1)
+  (. Thread (sleep 1000))
+  (play-measure metro (build-piece 10 parts) (build-piece 10 times) 1)
+  (. Thread (sleep 1000))
+  (play-measure metro (build-piece 10 parts) (build-piece 10 times) 1)
+  (. Thread (sleep 1000))
+  (play-measure metro (build-piece 10 parts) (build-piece 10 times) 1))
